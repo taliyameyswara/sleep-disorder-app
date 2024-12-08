@@ -1,7 +1,14 @@
 import re
+from turtle import onclick
 import streamlit as st
 import numpy as np
 import joblib
+
+st.set_page_config(
+    page_title="Prediksi Sleep Disorder Menggunakan Metode Naive Bayes Gaussian",
+    page_icon="💤",
+    layout="wide",
+)
 
 # Load the model
 model = joblib.load('shl_model.pkl')
@@ -62,7 +69,9 @@ if st.session_state.page == 'input':
             st.session_state.daily_steps = st.number_input('Langkah Harian', min_value=0)
 
         # Button to submit form
-        submitted = st.form_submit_button("Prediksi", on_click=handle_prediction)
+        submitted = st.form_submit_button("Prediksi")
+        if submitted:
+            handle_prediction()
 
 # Result page
 elif st.session_state.page == 'result':
@@ -89,5 +98,5 @@ elif st.session_state.page == 'result':
         Jika kondisi tidak membaik, segeralah periksa ke dokter untuk pengecekan dan penanganan lebih lanjut.
         """)
 
-    if st.button('Prediksi Ulang', on_click=reset):
+    if st.button('Prediksi Ulang'):
         reset()
